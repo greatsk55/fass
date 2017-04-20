@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thechange.fass.fass">
+
+    <uses-permission android:name="android.permission.GET_CLIPS" />
+    <uses-permission android:name="android.permission.READ_CLIPS" />
+    <uses-permission android:name="android.permission.WRITE_CLIPS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_SERVICE" />
+
+    <application
+        android:name=".application.Fass"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.SaveActivity"></activity>
+
+        <service
+            android:name=".service.ClipboardService"
+            android:enabled="true"
+            android:exported="true"
+            android:process=":remote" />
+        <service
+            android:name="service.RestartService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="RestartService"
+            android:process=":locker">
+            <intent-filter>
+                <action android:name="ACTION.RESTART.PersistentService" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".service.RestartBroad"
+            android:enabled="true"
+            android:exported="false"
+            android:label="RestartService"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="ACTION.RESTART.PersistentService" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
