@@ -9,10 +9,10 @@ import io.realm.annotations.PrimaryKey;
 
 public class Item extends RealmObject{
     @PrimaryKey
-    String url;
-    String category;
-    String urlImage;
-    String urlTitle;
+    public String url;
+    public String category;
+    public String urlImage;
+    public String urlTitle;
 
 }
 
