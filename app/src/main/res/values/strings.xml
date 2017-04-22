@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">fass</string>
+    <string name="app_name">Fass</string>
+    <string name="createCategory">새로운 카테고리 만들기</string>
+    <string name="categoryHint">카테고리 명을 입력해주세요</string>
+    <string name="cancel">취소</string>
+    <string name="ok">확인</string>
+
+    <string name="message">스크랩하고 싶은 자료를 링크복사해서 \n Fass앱을 사용해보세요!</string>
+    <string name="success">저장하였습니다!</string>
 </resources>

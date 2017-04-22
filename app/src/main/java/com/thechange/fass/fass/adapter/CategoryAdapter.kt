@@ -1,5 +1,7 @@
 package com.thechange.fass.fass.adapter
 
+import android.support.v4.content.ContextCompat
+import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -17,12 +19,16 @@ class CategoryAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Ite
     override fun convert(helper: BaseViewHolder, item: Item) {
         //helper.setText(R.id.tag, item)
 
+        val image = helper.convertView.findViewById(R.id.imageUrl) as ImageView
+
         if(helper.adapterPosition == 0 ){
             helper.setText(R.id.urlTitle, "")
             helper.setImageResource(R.id.imageUrl,R.drawable.ic_plus)
+            helper.setBackgroundColor(R.id.imageUrl, ContextCompat.getColor(mContext,R.color.colorPrimaryDark))
         }else{
-            helper.setText(R.id.urlTitle, item.urlTitle)
-            Glide.with(mContext).load(item.urlImage)
+            //helper.setBackgroundColor(R.id.imageUrl, ContextCompat.getColor(mContext,R.color.white))
+            helper.setText(R.id.urlTitle, item.category)
+            Glide.with(mContext).load(item.urlImage).into(image)
         }
 
         helper.addOnClickListener(R.id.item)

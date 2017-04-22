@@ -50,7 +50,18 @@ class ClipboardService : Service() {
                     intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-                    intent.putExtra("link", temp)
+
+
+                    val startHttp = temp.indexOf("http")
+                    val endHttp = temp.indexOf(" ", startHttp)
+                    var link : String?
+                    if( endHttp <= 0)
+                        link = temp.substring(startHttp)
+                    else{
+                        link = temp.substring(startHttp,endHttp)
+                    }
+
+                    intent.putExtra("link", link)
                     startActivity(intent)
                 }
             }
