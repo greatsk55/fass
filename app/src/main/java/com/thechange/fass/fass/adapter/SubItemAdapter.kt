@@ -26,7 +26,7 @@ class SubItemAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Item
 
 
         helper.addOnClickListener(R.id.item)
-        helper.addOnClickListener(R.id.date)
+        helper.addOnClickListener(R.id.option)
     }
 
 }

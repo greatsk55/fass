@@ -8,7 +8,6 @@ import io.realm.annotations.PrimaryKey;
  */
 
 public class Item extends RealmObject{
-    @PrimaryKey
     public String url;
     public String category;
     public String urlImage;

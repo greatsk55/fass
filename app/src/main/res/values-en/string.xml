@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fass</string>
+    <string name="createCategory">Create New Category</string>
+    <string name="categoryHint">Please enter a category name</string>
+    <string name="cancel">cancel</string>
+    <string name="ok">ok</string>
+
+    <string name="optionTitle">Edit Scrap</string>
+    <string name="categoryMove">Change category name</string>
+    <string name="itemRemove">remove</string>
+    <string name="share">share</string>
+
+    <string name="message">Copy the link you want to scrap \nand try the Fass app!</string>
+    <string name="success">Saved!</string>
+    <string name="fail">Failed to save..</string>
+</resources>

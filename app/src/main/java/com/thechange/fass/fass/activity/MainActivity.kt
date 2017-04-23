@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
@@ -24,10 +25,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var categoryList: ArrayList<Item>
+    private lateinit var listner:OnItemClickListener
+    private lateinit var listAdapter : MainCategoryAdapter
 
     override fun onResume() {
         super.onResume()
-
         initUI()
     }
 
@@ -40,32 +42,33 @@ class MainActivity : AppCompatActivity() {
         startService(intent)
 
 
-        initUI()
-    }
-
-    fun initUI() {
-
-        val realm = Realm.getDefaultInstance()
-        val unique = realm.where(Item::class.java).distinct("category")
-
-        categoryList = ArrayList<Item>()
-
-        categoryList.addAll(unique.toList())
-        val adapter = MainCategoryAdapter(R.layout.item_category_wide, categoryList)
-        adapter.emptyView = View.inflate(this, R.layout.item_empty, null)
-        binding.categoryList.adapter = adapter
-        binding.categoryList.layoutManager = LinearLayoutManager(this)
-        (findViewById(R.id.categoryList) as RecyclerView).addOnItemTouchListener(object : OnItemClickListener() {
+        listner = object : OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {}
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-                val item = adapter.getItem(position) as Item
+
+                val item = listAdapter.getItem(position)
                 val intent = Intent(this@MainActivity, SubActivity::class.java)
                 intent.putExtra("category", item.category)
                 startActivity(intent)
 
             }
-        })
+        }
 
+        (findViewById(R.id.categoryList) as RecyclerView).addOnItemTouchListener(listner)
+    }
+
+    fun initUI() {
+        val realm = Realm.getDefaultInstance()
+        val unique = realm.where(Item::class.java).distinct("category")
+
+        categoryList = ArrayList<Item>()
+        categoryList.addAll(unique.toList())
+
+        listAdapter = MainCategoryAdapter(R.layout.item_category_wide, categoryList)
+
+        listAdapter.emptyView = View.inflate(this, R.layout.item_empty, null)
+        binding.categoryList.adapter = listAdapter
+        binding.categoryList.layoutManager = LinearLayoutManager(this)
 
     }
 }
