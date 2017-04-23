@@ -60,11 +60,9 @@ class SaveActivity : AppCompatActivity() {
         val layoutManager = FlexboxLayoutManager()
         layoutManager.flexWrap  = FlexWrap.WRAP
         (findViewById(R.id.categoryList) as RecyclerView).layoutManager = layoutManager
-        //(findViewById(R.id.categoryList) as RecyclerView).setLayoutManager(GridLayoutManager(this,4))
         (findViewById(R.id.categoryList) as RecyclerView).addOnItemTouchListener(object: OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {}
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
-
                 if(position==0){
                     CreateCategoryDialog(this@SaveActivity, url).show()
                 }
@@ -83,6 +81,7 @@ class SaveActivity : AppCompatActivity() {
                                 item.url = data.url
                                 item.urlImage = data.imageUrl
                                 item.urlTitle = data.imageTitle
+                                item.date = data.date
                                 realm.commitTransaction()
                             }
 

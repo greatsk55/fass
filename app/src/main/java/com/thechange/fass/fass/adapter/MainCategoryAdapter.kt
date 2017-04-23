@@ -21,6 +21,15 @@ class MainCategoryAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter
 
         val image = helper.convertView.findViewById(R.id.imageUrl) as ImageView
 
+/*
+        if(helper.adapterPosition == 0 ){
+            val scale = mContext.resources.displayMetrics.density
+            val Height = 200 * scale + 0.5f
+            helper.convertView.findViewById(R.id.item).layoutParams.height = Height.toInt()
+        }else{
+
+        }
+*/
         helper.setText(R.id.urlTitle, item.category)
         Glide.with(mContext).load(item.urlImage).into(image)
 

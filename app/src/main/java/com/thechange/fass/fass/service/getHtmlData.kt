@@ -2,6 +2,8 @@ package com.thechange.fass.fass.service
 
 import com.thechange.fass.fass.model.DataFormat
 import org.jsoup.Jsoup
+import java.text.SimpleDateFormat
+import java.util.*
 
 /**
  * Created by user on 2017. 4. 22..
@@ -41,6 +43,10 @@ fun ogTag(urlStr:String) : DataFormat{
         sb.append(text)
     }
 
-    return DataFormat(urlStr, imageUrl, text)
+    val now = System.currentTimeMillis()
+    val date = Date(now)
+    val CurDateFormat = SimpleDateFormat("yyyy-MM-dd")
+
+    return DataFormat(urlStr, imageUrl, text, CurDateFormat.format(date))
 
 }

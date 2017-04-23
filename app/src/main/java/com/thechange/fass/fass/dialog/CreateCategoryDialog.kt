@@ -79,6 +79,7 @@ class CreateCategoryDialog : Dialog, View.OnClickListener {
                             item.category = text.text.toString()
                             item.urlImage = data.imageUrl
                             item.urlTitle = data.imageTitle
+                            item.date = data.date
                             realm.commitTransaction()
 
                             Toast.makeText(context, context.getString(R.string.success), Toast.LENGTH_SHORT).show()

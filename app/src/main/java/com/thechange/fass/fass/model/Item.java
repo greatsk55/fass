@@ -13,6 +13,7 @@ public class Item extends RealmObject{
     public String category;
     public String urlImage;
     public String urlTitle;
+    public String date;
 
 }
 
