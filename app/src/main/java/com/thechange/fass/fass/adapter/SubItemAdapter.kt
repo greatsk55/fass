@@ -43,9 +43,10 @@ class SubItemAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Item
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
 
+        var i =0
         for(s in 0..data.size){
             if( selectItem.get(s) != null && selectItem.get(s) == true){
-                val tempItem = data[s]
+                val tempItem = data[s-i]
                 data.remove(tempItem)
                 val deleteItem = realm.where(Item::class.java)
                         .equalTo("category", tempItem.category)
@@ -53,6 +54,7 @@ class SubItemAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Item
                         .equalTo("url",tempItem.url)
                         .findFirst()
                 deleteItem.deleteFromRealm()
+                i++
             }
         }
 

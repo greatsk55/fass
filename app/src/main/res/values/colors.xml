@@ -8,4 +8,5 @@
     <color name="lightGrey">#d4d4d4</color>
     <color name="white">#FFFFFF</color>
     <color name="alpha">#83000000</color>
+    <color name="alphaWhite">#00ffffff</color>
 </resources>

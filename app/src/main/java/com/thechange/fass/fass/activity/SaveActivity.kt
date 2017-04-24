@@ -28,8 +28,6 @@ class SaveActivity : AppCompatActivity() {
 
     private var itemCategory:String?=null
     private var itemDate:String?=null
-    private var itemUrl:String?=null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 /*
@@ -47,7 +45,6 @@ class SaveActivity : AppCompatActivity() {
             url = intent.getStringExtra("link2")
             itemCategory = intent.getStringExtra("category")
             itemDate = intent.getStringExtra("date")
-            itemUrl = intent.getStringExtra("url")
             flag = true
         }
 
@@ -77,10 +74,12 @@ class SaveActivity : AppCompatActivity() {
 
                                 if (flag) {
                                     val deleteItem = realm.where(Item::class.java)
-                                            .equalTo("category", itemCategory!!)
-                                            .equalTo("date", itemDate!!)
+                                            .equalTo("category", itemCategory?:"")
+                                            .equalTo("date", itemDate?:"1111-11-11")
+                                            .equalTo("url", url)
                                             .findFirst()
                                     deleteItem.deleteFromRealm()
+                                    item.date = itemDate
                                 }
 
                                 realm.commitTransaction()

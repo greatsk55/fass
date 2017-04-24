@@ -30,7 +30,9 @@ class MultiMoveCategory : Dialog, View.OnClickListener {
     private lateinit var text : EditText
     private lateinit var activity: Activity
 
-    constructor(context: Activity) : super(context, android.R.style.Theme_Translucent_NoTitleBar)
+    constructor(context: Activity) : super(context, android.R.style.Theme_Translucent_NoTitleBar){
+        activity = context
+    }
 
     //constructor(context: Context, theme: Int) : super(context, theme) {}
     //protected constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener) : super(context, cancelable, cancelListener) {}
@@ -119,6 +121,7 @@ class MultiMoveCategory : Dialog, View.OnClickListener {
                     Toast.makeText(context, context.getString(R.string.success), Toast.LENGTH_SHORT).show()
                     dismiss()
 
+                    activity.finish()
 
                 }
 

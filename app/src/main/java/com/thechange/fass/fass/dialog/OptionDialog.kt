@@ -67,7 +67,6 @@ class OptionDialog : Dialog, View.OnClickListener {
                 intent.putExtra("link2", item.url)
                 intent.putExtra("category", item.category)
                 intent.putExtra("date", item.date)
-                intent.putExtra("url", item.url)
                 activity.startActivity(intent)
 
                 dismiss()

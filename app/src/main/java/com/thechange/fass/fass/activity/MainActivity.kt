@@ -2,6 +2,7 @@ package com.thechange.fass.fass.activity
 
 import android.content.Intent
 import android.databinding.DataBindingUtil
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -10,9 +11,11 @@ import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.chad.library.adapter.base.listener.SimpleClickListener
 import com.thechange.fass.fass.R
 import com.thechange.fass.fass.adapter.MainCategoryAdapter
 import com.thechange.fass.fass.databinding.ActivityMainBinding
+import com.thechange.fass.fass.dialog.OptionDialog
 import com.thechange.fass.fass.model.Item
 import com.thechange.fass.fass.service.ClipboardService
 import io.realm.Realm
@@ -25,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var categoryList: ArrayList<Item>
-    private lateinit var listner:OnItemClickListener
     private lateinit var listAdapter : MainCategoryAdapter
 
     override fun onResume() {
@@ -42,19 +44,24 @@ class MainActivity : AppCompatActivity() {
         startService(intent)
 
 
-        listner = object : OnItemClickListener() {
-            override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {}
-            override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        binding.categoryList.addOnItemTouchListener(object: SimpleClickListener(){
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+            }
 
+            override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+            }
+
+            override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 val item = listAdapter.getItem(position)
                 val intent = Intent(this@MainActivity, SubActivity::class.java)
                 intent.putExtra("category", item.category)
                 startActivity(intent)
 
             }
-        }
 
-        binding.categoryList.addOnItemTouchListener(listner)
+            override fun onItemChildLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+            }
+        })
     }
 
     fun initUI() {

@@ -12,7 +12,6 @@ import com.thechange.fass.fass.model.Item
  * Created by user on 2017. 4. 20..
  */
 
-
 class CategoryAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Item, BaseViewHolder>(layoutResId, data) {
 
 
@@ -25,12 +24,14 @@ class CategoryAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Ite
             helper.setText(R.id.urlTitle, "")
             helper.setImageResource(R.id.imageUrl,R.drawable.ic_plus)
             helper.setBackgroundColor(R.id.imageUrl, ContextCompat.getColor(mContext,R.color.colorPrimaryDark))
+            helper.setBackgroundColor(R.id.dim, ContextCompat.getColor(mContext,R.color.alphaWhite))
         }else{
-            //helper.setBackgroundColor(R.id.imageUrl, ContextCompat.getColor(mContext,R.color.white))
+            helper.setBackgroundColor(R.id.imageUrl, ContextCompat.getColor(mContext,R.color.alphaWhite))
             helper.setText(R.id.urlTitle, item.category)
             Glide.with(mContext).load(item.urlImage).into(image)
-        }
+            helper.setBackgroundRes(R.id.dim, R.drawable.dim)
 
+        }
         helper.addOnClickListener(R.id.item)
     }
 
