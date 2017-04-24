@@ -49,10 +49,17 @@
             android:layout_height="match_parent"
             android:layout_marginTop="?attr/actionBarSize">
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:background="@drawable/bottom_line"
+                android:elevation="4dp"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/categoryList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
                 android:background="#FFFFFF"
                 tools:listitem="@layout/item_category_wide" />
 

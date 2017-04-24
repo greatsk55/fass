@@ -79,8 +79,8 @@
 
             <ImageView
                 android:id="@+id/del"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="69dp"
+                android:layout_height="69dp"
                 android:src="@mipmap/del"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
@@ -93,8 +93,8 @@
 
             <ImageView
                 android:id="@+id/move"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="69dp"
+                android:layout_height="69dp"
                 android:src="@mipmap/move"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"

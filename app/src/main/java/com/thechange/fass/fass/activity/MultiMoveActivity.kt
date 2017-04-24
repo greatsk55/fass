@@ -23,16 +23,11 @@ import java.util.concurrent.TimeUnit
 
 class MultiMoveActivity : AppCompatActivity() {
 
-
     private lateinit var categoryList : ArrayList<Item>
-    private var url: String? = null
-    private var flag = false
-
     private lateinit var selectList : ArrayList<DeleteData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         setContentView(R.layout.activity_multi_move)
         overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_down )

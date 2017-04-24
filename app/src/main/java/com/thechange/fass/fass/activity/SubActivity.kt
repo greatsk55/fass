@@ -13,6 +13,7 @@ import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnItemLongClickListener
+import com.chad.library.adapter.base.listener.SimpleClickListener
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.thechange.fass.fass.R
@@ -44,12 +45,22 @@ class SubActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sub)
         binding.activity = this
 
-        binding.itemList.addOnItemTouchListener(object : OnItemClickListener() {
-            override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {}
-            override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 
+        binding.itemList.addOnItemTouchListener(object:SimpleClickListener(){
+            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                Log.d("AAA", " Click")
+
+            }
+
+            override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                Log.d("AAA", " long Click")
+
+            }
+
+            override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                Log.d("AAA", " child Click")
                 if( !flag ) {
-                    when (view.id) {
+                    when (view?.id) {
                         R.id.item -> {
                             val url = listAdapter.getItem(position).url
                             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
@@ -65,25 +76,18 @@ class SubActivity : AppCompatActivity() {
                     }
                 }else{
                     listAdapter.selectItem.put(position, true)
-                    adapter.notifyItemChanged(position)
+                    adapter?.notifyItemChanged(position)
                 }
             }
 
-            override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                super.onItemLongClick(adapter, view, position)
+            override fun onItemChildLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
                 flag = true
                 listAdapter.selectItem.put(position, true)
                 listAdapter.notifyItemChanged(position)
-            }
-
-        })
-        /*
-        binding.itemList.addOnItemTouchListener(object: OnItemLongClickListener{
-            override fun onSimpleItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-
+                binding.move.visibility = View.VISIBLE
+                binding.del.visibility = View.VISIBLE
             }
         })
-        */
     }
 
     fun initUI(){
@@ -100,6 +104,41 @@ class SubActivity : AppCompatActivity() {
 
         itemList.addAll(items.toList())
         listAdapter = SubItemAdapter(R.layout.item_item, itemList)
+        /*
+        listAdapter.setOnItemClickListener { adapter, view, position ->
+            if( !flag ) {
+                when (view.id) {
+                    R.id.item -> {
+                        val url = listAdapter.getItem(position).url
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        startActivity(intent)
+                    }
+                    R.id.option -> {
+                        val dialog = OptionDialog(this@SubActivity, listAdapter.getItem(position))
+                        dialog.setOnDismissListener {
+                            initUI()
+                        }
+                        dialog.show()
+                    }
+                }
+            }else{
+                listAdapter.selectItem.put(position, true)
+                adapter.notifyItemChanged(position)
+            }
+
+        }
+
+        listAdapter.setOnItemLongClickListener { adapter, view, position ->
+            flag = true
+            listAdapter.selectItem.put(position, true)
+            listAdapter.notifyItemChanged(position)
+            binding.move.visibility = View.VISIBLE
+            binding.del.visibility = View.VISIBLE
+
+            true
+        }
+        */
+
         binding.itemList.adapter = listAdapter
         binding.itemList.setLayoutManager(GridLayoutManager(this,2))
 
@@ -130,8 +169,8 @@ class SubActivity : AppCompatActivity() {
                     }
                 }
                 intent.putExtra("list", list)
-
                 startActivity(intent)
+                refresh()
             }
             R.id.del->{
                 listAdapter.deleteItem()
