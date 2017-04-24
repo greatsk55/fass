@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.chad.library.adapter.base.listener.OnItemLongClickListener
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.thechange.fass.fass.R
@@ -19,6 +20,7 @@ import com.thechange.fass.fass.adapter.MainCategoryAdapter
 import com.thechange.fass.fass.adapter.SubItemAdapter
 import com.thechange.fass.fass.databinding.ActivitySubBinding
 import com.thechange.fass.fass.dialog.OptionDialog
+import com.thechange.fass.fass.model.DeleteData
 import com.thechange.fass.fass.model.Item
 import io.realm.Realm
 
@@ -28,6 +30,8 @@ class SubActivity : AppCompatActivity() {
     private lateinit var itemList: ArrayList<Item>
     private lateinit var category : String
     private lateinit var listAdapter : SubItemAdapter
+    private var flag = false
+
 
     override fun onResume() {
         super.onResume()
@@ -44,24 +48,42 @@ class SubActivity : AppCompatActivity() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {}
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
 
-                when(view.id){
-                    R.id.item->{
-                        val url = listAdapter.getItem(position).url
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        startActivity(intent)
-                    }
-                    R.id.option->{
-                        val dialog = OptionDialog(this@SubActivity, listAdapter.getItem(position))
-                        dialog.setOnDismissListener {
-                            initUI()
+                if( !flag ) {
+                    when (view.id) {
+                        R.id.item -> {
+                            val url = listAdapter.getItem(position).url
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                            startActivity(intent)
                         }
-                        dialog.show()
+                        R.id.option -> {
+                            val dialog = OptionDialog(this@SubActivity, listAdapter.getItem(position))
+                            dialog.setOnDismissListener {
+                                initUI()
+                            }
+                            dialog.show()
+                        }
                     }
+                }else{
+                    listAdapter.selectItem.put(position, true)
+                    adapter.notifyItemChanged(position)
                 }
+            }
+
+            override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
+                super.onItemLongClick(adapter, view, position)
+                flag = true
+                listAdapter.selectItem.put(position, true)
+                listAdapter.notifyItemChanged(position)
+            }
+
+        })
+        /*
+        binding.itemList.addOnItemTouchListener(object: OnItemLongClickListener{
+            override fun onSimpleItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
 
             }
         })
-
+        */
     }
 
     fun initUI(){
@@ -86,7 +108,51 @@ class SubActivity : AppCompatActivity() {
 
     fun onButtonClick(v:View){
         when(v.id){
-            R.id.cancel-> finish()
+            R.id.cancel-> {
+                if(flag){
+                    refresh()
+                }else {
+                    finish()
+                }
+            }
+            R.id.move->{
+                val intent = Intent(this, MultiMoveActivity::class.java)
+                val list = ArrayList<DeleteData>()
+
+                for( s in 0..listAdapter.data.size){
+                    if( listAdapter.selectItem.get(s) != null && listAdapter.selectItem.get(s)==true){
+                        val item = DeleteData(listAdapter.data[s].category,
+                                listAdapter.data[s].url,
+                                listAdapter.data[s].urlImage,
+                                listAdapter.data[s].urlTitle,
+                                listAdapter.data[s].date)
+                        list.add(item)
+                    }
+                }
+                intent.putExtra("list", list)
+
+                startActivity(intent)
+            }
+            R.id.del->{
+                listAdapter.deleteItem()
+                refresh()
+            }
+        }
+    }
+
+    fun refresh(){
+        binding.move.visibility = View.GONE
+        binding.del.visibility = View.GONE
+        listAdapter.selectItem = HashMap<Int,Boolean>()
+        listAdapter.notifyDataSetChanged()
+        flag = false
+    }
+
+    override fun onBackPressed() {
+        if(flag){
+            refresh()
+        }else {
+            super.onBackPressed()
         }
     }
 }

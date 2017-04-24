@@ -7,11 +7,7 @@
     android:layout_height="100dp"
     android:foreground="?attr/selectableItemBackground">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/alpha"
-        />
+
 
     <ImageView
         android:id="@+id/imageUrl"
@@ -20,6 +16,11 @@
         android:scaleType="centerInside"
         />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dim"
+        />
 
 
     <TextView
@@ -29,8 +30,7 @@
         android:textSize="12dp"
         android:textAlignment="center"
         android:layout_gravity="bottom|center"
-        android:background="@color/black"
-        android:textColor="#ffffff"
+        android:textColor="#1A237E"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"

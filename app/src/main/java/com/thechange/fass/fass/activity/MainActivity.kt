@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        (findViewById(R.id.categoryList) as RecyclerView).addOnItemTouchListener(listner)
+        binding.categoryList.addOnItemTouchListener(listner)
     }
 
     fun initUI() {

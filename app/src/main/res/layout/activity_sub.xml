@@ -77,6 +77,34 @@
                 android:background="#FFFFFF"
                 tools:listitem="@layout/item_item" />
 
+            <ImageView
+                android:id="@+id/del"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/del"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{activity::onButtonClick}"
+                android:visibility="gone"/>
+
+
+            <ImageView
+                android:id="@+id/move"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/move"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="15dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{activity::onButtonClick}"
+                android:visibility="gone"/>
+
+
 
         </RelativeLayout>
 

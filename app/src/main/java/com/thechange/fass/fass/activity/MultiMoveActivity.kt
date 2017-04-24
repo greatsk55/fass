@@ -1,7 +1,7 @@
 package com.thechange.fass.fass.activity
 
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.Toast
@@ -12,6 +12,8 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.thechange.fass.fass.R
 import com.thechange.fass.fass.adapter.CategoryAdapter
 import com.thechange.fass.fass.dialog.CreateCategoryDialog
+import com.thechange.fass.fass.dialog.MultiMoveCategory
+import com.thechange.fass.fass.model.DeleteData
 import com.thechange.fass.fass.model.Item
 import com.thechange.fass.fass.service.ogTag
 import io.reactivex.Observable
@@ -19,73 +21,62 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import java.util.concurrent.TimeUnit
 
+class MultiMoveActivity : AppCompatActivity() {
 
-class SaveActivity : AppCompatActivity() {
 
     private lateinit var categoryList : ArrayList<Item>
     private var url: String? = null
     private var flag = false
 
-    private var itemCategory:String?=null
-    private var itemDate:String?=null
-    private var itemUrl:String?=null
+    private lateinit var selectList : ArrayList<DeleteData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-/*
-        val lpWindow = WindowManager.LayoutParams()
-        lpWindow.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND
-        lpWindow.dimAmount = 0.5f
-        window!!.attributes = lpWindow
-*/
-        setContentView(R.layout.activity_save)
+
+
+        setContentView(R.layout.activity_multi_move)
         overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_down )
 
-        url = intent.getStringExtra("link")
+        selectList = intent.getParcelableArrayListExtra<DeleteData>("list")
 
-        if( url == null ){
-            url = intent.getStringExtra("link2")
-            itemCategory = intent.getStringExtra("category")
-            itemDate = intent.getStringExtra("date")
-            itemUrl = intent.getStringExtra("url")
-            flag = true
-        }
 
         (findViewById(R.id.categoryList) as RecyclerView).addOnItemTouchListener(object: OnItemClickListener() {
             override fun onSimpleItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {}
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
                 if(position==0){
-                    CreateCategoryDialog(this@SaveActivity, url!!, flag).show()
+                    MultiMoveCategory(this@MultiMoveActivity).show()
                 }
                 else{
                     val category = adapter.getItem(position) as Item
 
-                    Observable.fromCallable { ogTag(url!!) }
+                    Observable.fromCallable {  }
                             .subscribeOn(Schedulers.io())
                             .throttleFirst(3, TimeUnit.SECONDS)
                             .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                            .subscribe { data->
+                            .subscribe {
                                 val realm = Realm.getDefaultInstance()
-
                                 realm.beginTransaction()
-                                val item = realm.createObject(Item::class.java) // 새 객체 만들기
-                                item.url = url
-                                item.category = category.category
-                                item.urlImage = data.imageUrl
-                                item.urlTitle = data.imageTitle
-                                item.date = data.date
 
-                                if (flag) {
+                                for( temp in selectList ){
+                                    val item = realm.createObject(Item::class.java) // 새 객체 만들기
+                                    item.url = temp.url
+                                    item.category = category.category
+                                    item.urlImage = temp.urlImage
+                                    item.urlTitle = temp.urlTitle
+                                    item.date = temp.date
+
+
                                     val deleteItem = realm.where(Item::class.java)
-                                            .equalTo("category", itemCategory!!)
-                                            .equalTo("date", itemDate!!)
+                                            .equalTo("category", temp.category)
+                                            .equalTo("date", temp.date)
+                                            .equalTo("url", temp.url)
                                             .findFirst()
                                     deleteItem.deleteFromRealm()
                                 }
 
                                 realm.commitTransaction()
 
-                                Toast.makeText(this@SaveActivity, getString(R.string.success), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@MultiMoveActivity, getString(R.string.success), Toast.LENGTH_SHORT).show()
                                 finish()
                             }
 
@@ -115,5 +106,4 @@ class SaveActivity : AppCompatActivity() {
 
 
     }
-
 }

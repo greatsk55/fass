@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.thechange.fass.fass.R
+import com.thechange.fass.fass.model.DeleteData
 import com.thechange.fass.fass.model.Item
 import com.thechange.fass.fass.service.ogTag
 import io.reactivex.Observable
@@ -17,28 +18,19 @@ import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import java.util.concurrent.TimeUnit
 
-
 /**
- * Created by user on 2017. 4. 22..
+ * Created by user on 2017. 4. 24..
  */
 
 
-class CreateCategoryDialog : Dialog, View.OnClickListener {
+class MultiMoveCategory : Dialog, View.OnClickListener {
 
     private lateinit var mBtnCancel: Button
     private lateinit  var mBtnSend: Button
     private lateinit var text : EditText
-    private lateinit var link:String
     private lateinit var activity: Activity
-    private var flag = false
 
     constructor(context: Activity) : super(context, android.R.style.Theme_Translucent_NoTitleBar)
-    constructor(context: Activity, url:String, f:Boolean) : super(context, android.R.style.Theme_Translucent_NoTitleBar){
-        activity = context
-        link = url
-        flag = f
-
-    }
 
     //constructor(context: Context, theme: Int) : super(context, theme) {}
     //protected constructor(context: Context, cancelable: Boolean, cancelListener: DialogInterface.OnCancelListener) : super(context, cancelable, cancelListener) {}
@@ -96,42 +88,37 @@ class CreateCategoryDialog : Dialog, View.OnClickListener {
     }
 
     fun okClicked(){
-        Observable.fromCallable { ogTag(link) }
+        Observable.fromCallable { }
                 .subscribeOn(Schedulers.io())
                 .throttleFirst(3, TimeUnit.SECONDS)
                 .observeOn(io.reactivex.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe{ data->
+                .subscribe{
+                    val list = activity.intent.getParcelableArrayListExtra<DeleteData>("list")
+
                     val realm = Realm.getDefaultInstance()
-
                     realm.beginTransaction()
-                    val item = realm.createObject(Item::class.java) // 새 객체 만들기
-                    item.url = link
-                    item.category = text.text.toString()
-                    item.urlImage = data.imageUrl
-                    item.urlTitle = data.imageTitle
-                    item.date = data.date
 
-                    if (flag) {
-                        val itemCategory = activity.intent.getStringExtra("category")
-                        val itemDate = activity.intent.getStringExtra("date")
-                        val itemUrl = activity.intent.getStringExtra("url")
+                    for( temp in list ){
+                        val item = realm.createObject(Item::class.java) // 새 객체 만들기
+                        item.url = temp.url
+                        item.category = text.text.toString()
+                        item.urlImage = temp.urlImage
+                        item.urlTitle = temp.urlTitle
+                        item.date = temp.date
+
+
                         val deleteItem = realm.where(Item::class.java)
-                                .equalTo("category", itemCategory!!)
-                                .equalTo("date", itemDate!!)
-                                .equalTo("url", itemUrl)
+                                .equalTo("category", temp.category)
+                                .equalTo("date", temp.date)
+                                .equalTo("url", temp.url)
                                 .findFirst()
                         deleteItem.deleteFromRealm()
                     }
 
-
                     realm.commitTransaction()
-
                     Toast.makeText(context, context.getString(R.string.success), Toast.LENGTH_SHORT).show()
                     dismiss()
 
-                    if( !flag ){
-                        activity.finishAffinity()
-                    }
 
                 }
 
