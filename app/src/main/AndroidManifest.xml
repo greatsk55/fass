@@ -32,11 +32,35 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
 
+        <activity android:name=".activity.MultiMoveActivity"></activity>
+
         <service
             android:name=".service.ClipboardService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
+
+
+        <service
+            android:name=".service.PersistentService"
+            android:enabled="true"
+            android:process=":remote" >
+        </service>
+
+        <receiver
+            android:name=".service.RestartService"
+            android:enabled="true"
+            android:exported="false"
+            android:label="RestartService"
+            android:process=":remote" >
+            <intent-filter>
+                <action android:name="ACTION.RESTART.PersistentService" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+
+        <!--
         <service
             android:name="service.RestartService"
             android:enabled="true"
@@ -60,8 +84,9 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        -->
 
-        <activity android:name=".activity.MultiMoveActivity"></activity>
+
     </application>
 
 </manifest>
