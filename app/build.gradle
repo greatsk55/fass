@@ -9,8 +9,8 @@ android {
         applicationId "com.thechange.fass.fass"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 2
-        versionName "노장은 죽지않는다. Older is never die"
+        versionCode 3
+        versionName "스피드가 생명"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
 
