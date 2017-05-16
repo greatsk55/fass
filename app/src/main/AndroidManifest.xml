@@ -26,19 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity"/>
         <activity
             android:name=".activity.SaveActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" />
 
-        <activity android:name=".activity.MultiMoveActivity"></activity>
-
-        <service
-            android:name=".service.ClipboardService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":remote" />
+        <activity android:name=".activity.MultiMoveActivity"/>
 
 
         <service

@@ -48,17 +48,17 @@ class SubActivity : AppCompatActivity() {
 
         binding.itemList.addOnItemTouchListener(object:SimpleClickListener(){
             override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                Log.d("AAA", " Click")
+                //Log.d("AAA", " Click")
 
             }
 
             override fun onItemLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                Log.d("AAA", " long Click")
+                //Log.d("AAA", " long Click")
 
             }
 
             override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                Log.d("AAA", " child Click")
+                //Log.d("AAA", " child Click")
                 if( !flag ) {
                     when (view?.id) {
                         R.id.item -> {

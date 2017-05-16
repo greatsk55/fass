@@ -25,10 +25,10 @@ class PersistentService : Service(), Runnable {
     val TAG = "PersistentService";
 
     // 서비스 종료시 재부팅 딜레이 시간, activity의 활성 시간을 벌어야 한다.
-    val REBOOT_DELAY_TIMER = 10 * 1000L;
+    val REBOOT_DELAY_TIMER = 3 * 1000L;
 
     // GPS를 받는 주기 시간
-    val LOCATION_UPDATE_DELAY = 20 * 1000L; // 5 * 60 * 1000
+    val LOCATION_UPDATE_DELAY = 10L // 5 * 60 * 1000
 
     var mHandler : Handler? = null
     var mIsRunning = false
@@ -67,7 +67,7 @@ class PersistentService : Service(), Runnable {
                     }
                 }
             } catch (e: Exception) {
-                Log.d("AAA","none")
+                //Log.d("AAA","none")
             }
         }
 
@@ -75,14 +75,14 @@ class PersistentService : Service(), Runnable {
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        Log.d("PersistentService", "onBind()")
+        //Log.d("PersistentService", "onBind()")
         return null
     }
 
     override fun onCreate() {
 
         // 등록된 알람은 제거
-        Log.d("PersistentService", "onCreate()")
+        //Log.d("PersistentService", "onCreate()")
         unregisterRestartAlarm()
         super.onCreate()
         mIsRunning = false
@@ -90,7 +90,7 @@ class PersistentService : Service(), Runnable {
 
     override fun onDestroy() {
         // 서비스가 죽었을때 알람 등록
-        Log.d("PersistentService", "onDestroy()")
+        //Log.d("PersistentService", "onDestroy()")
         registerRestartAlarm()
 
         super.onDestroy()
@@ -98,7 +98,7 @@ class PersistentService : Service(), Runnable {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("PersistentService", "onStart()")
+        //Log.d("PersistentService", "onStart()")
         super.onStartCommand(intent, flags, startId)
 
         mStartId = startId
@@ -113,18 +113,18 @@ class PersistentService : Service(), Runnable {
 
 
     override fun run() {
-        Log.e(TAG, "run()");
+        //Log.e(TAG, "run()");
 
         if(!mIsRunning)
         {
-            Log.d("PersistentService", "run(), mIsRunning is false");
-            Log.d("PersistentService", "run(), alarm service end");
+            //Log.d("PersistentService", "run(), mIsRunning is false");
+            //Log.d("PersistentService", "run(), alarm service end");
             return;
 
         } else {
 
-            Log.d("PersistentService", "run(), mIsRunning is true");
-            Log.d("PersistentService", "run(), alarm repeat after five minutes");
+            //Log.d("PersistentService", "run(), mIsRunning is true");
+            //Log.d("PersistentService", "run(), alarm repeat after five minutes");
 
             function()
 
@@ -133,9 +133,9 @@ class PersistentService : Service(), Runnable {
         }
     }
     fun function() {
-        Log.d(TAG, "========================");
-        Log.d(TAG, "function()");
-        Log.d(TAG, "========================");
+        //Log.d(TAG, "========================");
+        //Log.d(TAG, "function()");
+        //Log.d(TAG, "========================");
 
         val cm = getSystemService(Context.CLIPBOARD_SERVICE) as (ClipboardManager)
 
@@ -150,7 +150,7 @@ class PersistentService : Service(), Runnable {
      */
     fun registerRestartAlarm() {
 
-        Log.d("PersistentService", "registerRestartAlarm()")
+        //Log.d("PersistentService", "registerRestartAlarm()")
 
         val intent = Intent(this, RestartService::class.java)
         intent.setAction(RestartService.ACTION_RESTART_PERSISTENTSERVICE)
@@ -169,7 +169,7 @@ class PersistentService : Service(), Runnable {
      */
     fun unregisterRestartAlarm() {
 
-        Log.d("PersistentService", "unregisterRestartAlarm()")
+        //Log.d("PersistentService", "unregisterRestartAlarm()")
         val intent = Intent(this, RestartService::class.java)
         intent.setAction(RestartService.ACTION_RESTART_PERSISTENTSERVICE)
         val sender = PendingIntent.getBroadcast(this, 0, intent, 0)

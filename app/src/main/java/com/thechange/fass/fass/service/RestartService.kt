@@ -24,13 +24,13 @@ class RestartService : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d("RestartService", "RestartService called!!!!!!!!!!!!!!!!!!!!!!!");
+        //Log.d("RestartService", "RestartService called!!!!!!!!!!!!!!!!!!!!!!!");
 
 
         /* 서비스 죽일때 알람으로 다시 서비스 등록 */
         if (intent?.getAction().equals(ACTION_RESTART_PERSISTENTSERVICE)) {
 
-            Log.d("RestartService", "Service dead, but resurrection");
+            //Log.d("RestartService", "Service dead, but resurrection");
 
             val i = Intent(context, PersistentService::class.java)
             context?.startService(i)
@@ -39,7 +39,7 @@ class RestartService : BroadcastReceiver() {
         /* 폰 재부팅할때 서비스 등록 */
         if (intent?.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
-            Log.d("RestartService", "ACTION_BOOT_COMPLETED");
+            //Log.d("RestartService", "ACTION_BOOT_COMPLETED");
 
             val i = Intent(context, PersistentService::class.java)
             context?.startService(i)

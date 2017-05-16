@@ -62,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             startService(intent)
 
         } catch (e:Exception) {
-            Log.d("AAA", "diddit")
             e.printStackTrace()
         }
 
