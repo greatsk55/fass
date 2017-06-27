@@ -5,10 +5,16 @@
     <string name="cancel">취소</string>
     <string name="ok">확인</string>
 
+    <string name="on">켜기</string>
+    <string name="off">끄기</string>
     <string name="optionTitle">스크랩 편집</string>
     <string name="categoryMove">카테고리 변경</string>
+    <string name="titleChange">제목 변경</string>
     <string name="itemRemove">항목 삭제</string>
     <string name="share">공유하기</string>
+
+    <string name="serviceRun">지금 URL 링크를 복사하면 동작합니다.</string>
+    <string name="serviceStop">서비스가 중지되었습니다.</string>
 
     <string name="message">스크랩하고 싶은 자료를 링크복사해서 \n Fass앱을 사용해보세요!</string>
     <string name="success">저장하였습니다!</string>

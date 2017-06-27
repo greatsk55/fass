@@ -6,24 +6,26 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.listener.OnItemClickListener
-import com.chad.library.adapter.base.listener.OnItemLongClickListener
 import com.chad.library.adapter.base.listener.SimpleClickListener
-import com.google.android.flexbox.FlexWrap
-import com.google.android.flexbox.FlexboxLayoutManager
 import com.thechange.fass.fass.R
-import com.thechange.fass.fass.adapter.MainCategoryAdapter
 import com.thechange.fass.fass.adapter.SubItemAdapter
 import com.thechange.fass.fass.databinding.ActivitySubBinding
 import com.thechange.fass.fass.dialog.OptionDialog
 import com.thechange.fass.fass.model.DeleteData
 import com.thechange.fass.fass.model.Item
+import com.thechange.fass.fass.service.RxBus
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.schedulers.Schedulers
+import io.reactivex.subjects.PublishSubject
 import io.realm.Realm
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
+import java.util.concurrent.TimeUnit
 
 class SubActivity : AppCompatActivity() {
 
@@ -37,7 +39,32 @@ class SubActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+
+        RxBus().instanceOf().getEvents()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { flag ->
+
+                    Log.d("AAA", "did +  " + (flag as Boolean))
+                    if( flag as Boolean ) {
+                        initUI()
+                    }
+                }
+
+
+
         initUI()
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+
+        if( RxBus().hasObservers() ){
+            Log.d("AAA", "has observer")
+            RxBus().complete()
+        }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

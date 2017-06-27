@@ -44,6 +44,16 @@
             android:textColor="@color/black"
             />
         <TextView
+            android:id="@+id/titleChange"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingStart="20dp"
+            android:text="@string/titleChange"
+            android:gravity="center_vertical"
+            android:textSize="19dp"
+            android:textColor="@color/black"
+            />
+        <TextView
             android:id="@+id/itemRemove"
             android:layout_width="match_parent"
             android:layout_height="50dp"

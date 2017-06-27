@@ -6,10 +6,17 @@
     <string name="cancel">cancel</string>
     <string name="ok">ok</string>
 
+    <string name="on">on</string>
+    <string name="off">off</string>
+
     <string name="optionTitle">Edit Scrap</string>
     <string name="categoryMove">Change category name</string>
+    <string name="titleChange">Change title</string>
     <string name="itemRemove">remove</string>
     <string name="share">share</string>
+
+    <string name="serviceRun">Service is active. Start by Copying url link </string>
+    <string name="serviceStop">Service is off</string>
 
     <string name="message">Copy the link you want to scrap \nand try the Fass app!</string>
     <string name="success">Saved!</string>

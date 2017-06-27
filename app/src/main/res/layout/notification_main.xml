@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/main1"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_circle_logo"
+        android:layout_gravity="center_vertical"/>
+
+    <LinearLayout
+        android:id="@+id/main2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            />
+        <TextView
+            android:id="@+id/service"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="13dp"
+            android:text="@string/serviceRun"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/cancel"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_cancel_black_24dp"
+            android:layout_marginStart="10dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:layout_gravity="end|center_vertical"
+            />
+    </FrameLayout>
+
+
+</LinearLayout>

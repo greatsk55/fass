@@ -7,17 +7,22 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.SimpleClickListener
 import com.thechange.fass.fass.R
 import com.thechange.fass.fass.adapter.MainCategoryAdapter
+import com.thechange.fass.fass.application.Fass.isRun
 import com.thechange.fass.fass.databinding.ActivityMainBinding
 import com.thechange.fass.fass.model.Item
 import com.thechange.fass.fass.service.PersistentService
 import com.thechange.fass.fass.service.RestartService
 import io.realm.Realm
+import android.widget.Toast
+import com.thechange.fass.fass.service.MainService
+
 
 /**
  * Created by user on 2017. 4. 22..
@@ -38,13 +43,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(binding.toolbar)
+        setTitle("")
 
-        // ClipboardService 시작
         /*
-        val intent = Intent(this, ClipboardService::class.java)
-        startService(intent)
-        */
-
         val intent = Intent(this, PersistentService::class.java)
 
         // 리시버 등록
@@ -52,8 +54,6 @@ class MainActivity : AppCompatActivity() {
 
         try
         {
-            // xml에서 정의해도 됨?
-            // 이것이 정확히 무슨 기능을 하지는지?
             val mainFilter = IntentFilter("com.thechange.fass.fass.service")
 
             // 리시버 저장
@@ -65,8 +65,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e:Exception) {
             e.printStackTrace()
         }
+*/
 
-
+        startService(Intent(applicationContext, MainService::class.java))
 
 
         binding.categoryList.addOnItemTouchListener(object: SimpleClickListener(){
@@ -83,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
 
             }
-
             override fun onItemChildLongClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
             }
         })
@@ -105,7 +105,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        unregisterReceiver(receiver)
         super.onDestroy()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        getMenuInflater().inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        when ( item?.itemId){
+            R.id.on->{
+                startService(Intent(applicationContext, MainService::class.java))
+            }
+            R.id.off->{
+                stopService(Intent(applicationContext, MainService::class.java))
+            }
+        }
+
+        return true
     }
 }

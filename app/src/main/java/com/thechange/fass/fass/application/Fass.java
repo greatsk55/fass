@@ -13,6 +13,8 @@ import io.realm.RealmConfiguration;
 
 public class Fass extends Application {
 
+    public static boolean isRun = true;
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_corner"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titleChange"
+            android:textColor="@color/black"
+            android:textSize="16dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@null"
+                android:layout_marginTop="5dp"
+                android:paddingStart="10dp"
+                android:textSize="15dp"
+                android:textColor="@color/black"
+                />
+
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/popup_foot_left_selector"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/popup_foot_right_selector"
+                android:gravity="center"
+                android:text="@string/ok"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

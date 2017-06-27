@@ -53,6 +53,7 @@ class OptionDialog : Dialog, View.OnClickListener {
         findViewById(R.id.itemRemove).setOnClickListener(this)
         findViewById(R.id.share).setOnClickListener(this)
         findViewById(R.id.cancel).setOnClickListener(this)
+        findViewById(R.id.titleChange).setOnClickListener(this)
     }
 
     override fun onDetachedFromWindow() {
@@ -69,6 +70,11 @@ class OptionDialog : Dialog, View.OnClickListener {
                 intent.putExtra("date", item.date)
                 activity.startActivity(intent)
 
+                dismiss()
+            }
+            R.id.titleChange->{
+                val dialog = EditTitleDialog(context, item)
+                dialog.show()
                 dismiss()
             }
             R.id.itemRemove -> {

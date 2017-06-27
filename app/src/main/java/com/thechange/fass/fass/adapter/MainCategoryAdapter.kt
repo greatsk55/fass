@@ -22,7 +22,7 @@ class MainCategoryAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter
         val image = helper.convertView.findViewById(R.id.imageUrl) as ImageView
 
         helper.setText(R.id.urlTitle, item.category)
-        Glide.with(mContext).load(item.urlImage).into(image)
+        Glide.with(mContext).load(item.urlImage).placeholder(R.mipmap.fass).into(image)
 
 
         helper.addOnClickListener(R.id.item)

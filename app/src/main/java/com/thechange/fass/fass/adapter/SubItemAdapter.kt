@@ -32,7 +32,7 @@ class SubItemAdapter(layoutResId: Int, data: List<Item>) : BaseQuickAdapter<Item
 
         helper.setText(R.id.urlTitle, item.urlTitle)
         helper.setText(R.id.date, item.date)
-        Glide.with(mContext).load(item.urlImage).into(image)
+        Glide.with(mContext).load(item.urlImage).placeholder(R.mipmap.fass).into(image)
         helper.addOnClickListener(R.id.item)
         helper.addOnClickListener(R.id.option)
         helper.addOnLongClickListener(R.id.item)

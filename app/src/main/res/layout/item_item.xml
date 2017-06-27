@@ -67,6 +67,7 @@
             app:srcCompat="@drawable/ic_settings_work_tool"
             android:layout_marginEnd="10dp"
             android:foreground="?attr/selectableItemBackground"
+
             />
 
     </FrameLayout>

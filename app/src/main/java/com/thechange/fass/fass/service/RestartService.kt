@@ -32,7 +32,7 @@ class RestartService : BroadcastReceiver() {
 
             //Log.d("RestartService", "Service dead, but resurrection");
 
-            val i = Intent(context, PersistentService::class.java)
+            val i = Intent(context, MainService::class.java)
             context?.startService(i)
         }
 
@@ -41,7 +41,7 @@ class RestartService : BroadcastReceiver() {
 
             //Log.d("RestartService", "ACTION_BOOT_COMPLETED");
 
-            val i = Intent(context, PersistentService::class.java)
+            val i = Intent(context, MainService::class.java)
             context?.startService(i)
         }
     }

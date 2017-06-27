@@ -41,6 +41,12 @@
             android:process=":remote" >
         </service>
 
+        <service
+            android:name=".service.MainService"
+            android:enabled="true"
+            android:process=":remote" />
+
+
         <receiver
             android:name=".service.RestartService"
             android:enabled="true"
@@ -66,18 +72,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </service>
-
-        <receiver
-            android:name=".service.RestartBroad"
-            android:enabled="true"
-            android:exported="false"
-            android:label="RestartService"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="ACTION.RESTART.PersistentService" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
         -->
 
 
